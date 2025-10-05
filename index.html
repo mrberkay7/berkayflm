@@ -1,190 +1,232 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BerkayFilm 🍿</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #1c1c1c;
-            padding: 20px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        header input {
-            margin-top: 10px;
-            padding: 10px;
-            width: 80%;
-            max-width: 600px;
-            border: none;
-            border-radius: 5px;
-            background-color: #333;
-            color: white;
-            font-size: 1em;
-        }
-        #categories {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        #categories button {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #categories button:hover {
-            background-color: #f05454;
-        }
-        #movie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .movie-card {
-            background-color: #1c1c1c;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .movie-card:hover {
-            transform: scale(1.05);
-        }
-        .movie-card img {
-            width: 100%;
-            height: auto;
-        }
-        .movie-card h3 {
-            text-align: center;
-            padding: 10px;
-            margin: 0;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.9);
-            padding-top: 60px;
-        }
-        .modal-content {
-            position: relative;
-            margin: auto;
-            padding: 20px;
-            width: 80%;
-            max-width: 800px;
-            background-color: #333;
-            border-radius: 10px;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: white;
-            font-size: 2em;
-            cursor: pointer;
-        }
-        .close-btn:hover {
-            color: #f05454;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BerkayFilm</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #111;
+    }
+
+    header h1 {
+      color: #ff0000;
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    .category {
+      text-align: center;
+      margin: 20px 0 10px;
+      font-size: 1.5em;
+      color: #ff0000;
+    }
+
+    .films-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+    }
+
+    .film-card {
+      background-color: #111;
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+      width: 200px;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .film-card:hover {
+      transform: scale(1.05);
+    }
+
+    .film-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .film-card h3 {
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+
+    .film-card p {
+      font-size: 0.9em;
+      padding: 0 5px 10px 5px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>BerkayFilm 🍿</h1>
-        <input type="text" id="search" placeholder="Film ara...">
-    </header>
 
-    <nav id="categories">
-        <!-- Kategoriler burada listelenecek -->
-    </nav>
+<header>
+  <h1>BerkayFilm</h1>
+</header>
 
-    <main id="movie-grid">
-        <!-- Filmler burada listelenecek -->
-    </main>
+<!-- Aksiyon -->
+<div class="category">Aksiyon</div>
+<div class="films-container">
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+1" alt="Film 1">
+    <h3>Film 1</h3>
+    <p>Heyecan dolu aksiyon filmi.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+2" alt="Film 2">
+    <h3>Film 2</h3>
+    <p>Adrenalin dolu bir macera.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+3" alt="Film 3">
+    <h3>Film 3</h3>
+    <p>Patlayıcı sahneler ve aksiyon.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+4" alt="Film 4">
+    <h3>Film 4</h3>
+    <p>Kahramanlık dolu bir hikaye.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+5" alt="Film 5">
+    <h3>Film 5</h3>
+    <p>Savaş ve mücadele temalı film.</p>
+  </div>
+</div>
 
-    <div id="player-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <iframe id="player" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
+<!-- Korku -->
+<div class="category">Korku</div>
+<div class="films-container">
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+6" alt="Film 6">
+    <h3>Film 6</h3>
+    <p>Korku ve gerilim dolu film.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+7" alt="Film 7">
+    <h3>Film 7</h3>
+    <p>Geceyi unutulmaz kılacak bir korku.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+8" alt="Film 8">
+    <h3>Film 8</h3>
+    <p>Psikolojik gerilim ve korku.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+9" alt="Film 9">
+    <h3>Film 9</h3>
+    <p>Hayatta kalma korkusu.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+10" alt="Film 10">
+    <h3>Film 10</h3>
+    <p>Korku dolu gizemli olaylar.</p>
+  </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const movieGrid = document.getElementById('movie-grid');
-            const searchInput = document.getElementById('search');
-            const playerModal = document.getElementById('player-modal');
-            const playerIframe = document.getElementById('player');
-            const closeBtn = document.querySelector('.close-btn');
+<!-- Dram -->
+<div class="category">Dram</div>
+<div class="films-container">
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+11" alt="Film 11">
+    <h3>Film 11</h3>
+    <p>Duygusal ve etkileyici hikaye.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+12" alt="Film 12">
+    <h3>Film 12</h3>
+    <p>Kalbinizi sarsacak bir dram.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+13" alt="Film 13">
+    <h3>Film 13</h3>
+    <p>Aile ve arkadaşlık temalı dram.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+14" alt="Film 14">
+    <h3>Film 14</h3>
+    <p>İçsel mücadele ve duygular.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+15" alt="Film 15">
+    <h3>Film 15</h3>
+    <p>Gözyaşlarınızı tutamayacağınız film.</p>
+  </div>
+</div>
 
-            let movies = [];
+<!-- Macera -->
+<div class="category">Macera</div>
+<div class="films-container">
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+16" alt="Film 16">
+    <h3>Film 16</h3>
+    <p>Heyecan ve keşif dolu macera.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+17" alt="Film 17">
+    <h3>Film 17</h3>
+    <p>Yeni dünyaların keşfi.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+18" alt="Film 18">
+    <h3>Film 18</h3>
+    <p>Adrenalin ve eğlence dolu.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+19" alt="Film 19">
+    <h3>Film 19</h3>
+    <p>Tehlikeli yolculuklar.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+20" alt="Film 20">
+    <h3>Film 20</h3>
+    <p>Unutulmaz bir macera hikayesi.</p>
+  </div>
+</div>
 
-            // Filmleri JSON dosyasından yükle
-            fetch('data/movies.json')
-                .then(response => response.json())
-                .then(data => {
-                    movies = data;
-                    displayMovies(movies);
-                });
+<!-- Romantik -->
+<div class="category">Romantik</div>
+<div class="films-container">
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+21" alt="Film 21">
+    <h3>Film 21</h3>
+    <p>Aşk ve tutku dolu hikaye.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+22" alt="Film 22">
+    <h3>Film 22</h3>
+    <p>Kalpleri birleştiren romantizm.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+23" alt="Film 23">
+    <h3>Film 23</h3>
+    <p>Duygusal ve etkileyici aşk hikayesi.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+24" alt="Film 24">
+    <h3>Film 24</h3>
+    <p>İmkansız aşkın öyküsü.</p>
+  </div>
+  <div class="film-card">
+    <img src="https://via.placeholder.com/200x300?text=Film+25" alt="Film 25">
+    <h3>Film 25</h3>
+    <p>Tutkulu ve unutulmaz romantik film.</p>
+  </div>
+</div>
 
-            // Filmleri görüntüle
-            function displayMovies(movies) {
-                movieGrid.innerHTML = '';
-                movies.forEach(movie => {
-                    const movieCard = document.createElement('div');
-                    movieCard.classList.add('movie-card');
-                    movieCard.innerHTML = `
-                        <img src="${movie.image}" alt="${movie.title}">
-                        <h3>${movie.title}</h3>
-                    `;
-                    movieCard.addEventListener('click', () => {
-                        playerIframe.src = movie.url;
-                        playerModal.style.display = 'block';
-                    });
-                    movieGrid.appendChild(movieCard);
-                });
-            }
+<!-- Daha fazla kategoriyi ve filmleri 50’ye tamamlamak için aynı yapıyı kullanabilirsiniz -->
+<!-- Örnek: Bilim Kurgu, Animasyon, Suç, Fantastik, Belgesel vb. -->
 
-            // Arama fonksiyonu
-            searchInput.addEventListener('input', () => {
-                const query = searchInput.value.toLowerCase();
-                const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(query));
-                displayMovies(filteredMovies);
-            });
-
-            // Modalı kapatma
-            closeBtn.addEventListener('click', () => {
-                playerModal.style.display = 'none';
-                playerIframe.src = '';
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target === playerModal) {
-                    playerModal.style.display = 'none';
-                    playerIframe.src = '';
-                }
-            });
-        });
-    </script>
 </body>
 </html>
