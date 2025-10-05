@@ -1,109 +1,190 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BerkayFilm</title>
-  <style>
-    body {margin:0;font-family:Arial,sans-serif;background:#0f1115;color:white;}
-    header {padding:20px;background:#111418;display:flex;justify-content:space-between;align-items:center;}
-    .logo {font-size:24px;font-weight:bold;color:#f05454;}
-    .search input {padding:8px;border-radius:6px;border:none;width:250px;}
-    .genres {display:flex;gap:10px;padding:10px;flex-wrap:wrap;}
-    .genre {padding:6px 12px;border-radius:20px;background:rgba(255,255,255,0.1);cursor:pointer;}
-    .genre.active {background:#f05454;color:white;}
-    main {padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px;}
-    .card {background:#111418;border-radius:12px;overflow:hidden;cursor:pointer;transition:0.3s;}
-    .card:hover {transform:scale(1.05);}
-    .thumb {width:100%;height:270px;background-size:cover;background-position:center;}
-    .title {padding:10px;font-weight:bold;}
-    .modal {display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;}
-    .modal.open {display:flex;}
-    .player {width:90vw;height:60vh;background:black;border-radius:12px;position:relative;}
-    .close {position:absolute;top:10px;right:10px;color:white;background:red;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BerkayFilm 🍿</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1c1c1c;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header input {
+            margin-top: 10px;
+            padding: 10px;
+            width: 80%;
+            max-width: 600px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            font-size: 1em;
+        }
+        #categories {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        #categories button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #categories button:hover {
+            background-color: #f05454;
+        }
+        #movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .movie-card {
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+        .movie-card img {
+            width: 100%;
+            height: auto;
+        }
+        .movie-card h3 {
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding-top: 60px;
+        }
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            background-color: #333;
+            border-radius: 10px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            color: #f05454;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo">BerkayFilm</div>
-    <div class="search">
-      <input type="text" id="search" placeholder="Film ara...">
+    <header>
+        <h1>BerkayFilm 🍿</h1>
+        <input type="text" id="search" placeholder="Film ara...">
+    </header>
+
+    <nav id="categories">
+        <!-- Kategoriler burada listelenecek -->
+    </nav>
+
+    <main id="movie-grid">
+        <!-- Filmler burada listelenecek -->
+    </main>
+
+    <div id="player-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <iframe id="player" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+        </div>
     </div>
-  </header>
-  <div class="genres" id="genres"></div>
-  <main id="grid"></main>
 
-  <div class="modal" id="modal">
-    <div class="player" id="player-container">
-      <button class="close" id="closeModal">Kapat</button>
-      <iframe id="player" src="" frameborder="0" allowfullscreen style="width:100%;height:100%;border-radius:12px;"></iframe>
-    </div>
-  </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const movieGrid = document.getElementById('movie-grid');
+            const searchInput = document.getElementById('search');
+            const playerModal = document.getElementById('player-modal');
+            const playerIframe = document.getElementById('player');
+            const closeBtn = document.querySelector('.close-btn');
 
-  <script>
-    // Demo film verileri (alt alta tek index içinde)
-    const MOVIES = [
-      {title:'Zodiac',genre:'Suç',thumb:'https://via.placeholder.com/400x600?text=Zodiac',url:'https://www.youtube.com/embed/3U4l4MmnR2c'},
-      {title:'Se7en',genre:'Suç',thumb:'https://via.placeholder.com/400x600?text=Se7en',url:'https://www.youtube.com/embed/znmZoVkCjpI'},
-      {title:'Silence of the Lambs',genre:'Korku',thumb:'https://via.placeholder.com/400x600?text=Silence',url:'https://www.youtube.com/embed/W6Mm8Sbe__o'},
-      {title:'Monster',genre:'Suç',thumb:'https://via.placeholder.com/400x600?text=Monster',url:'https://www.youtube.com/embed/7GB6yOdV5gU'},
-      {title:'Psycho',genre:'Korku',thumb:'https://via.placeholder.com/400x600?text=Psycho',url:'https://www.youtube.com/embed/NG3pQRpS9g8'},
-      {title:'The Notebook',genre:'Romantik',thumb:'https://via.placeholder.com/400x600?text=Notebook',url:'https://www.youtube.com/embed/FC6biTjEyZw'},
-      {title:'Before Sunrise',genre:'Romantik',thumb:'https://via.placeholder.com/400x600?text=Before+Sunrise',url:'https://www.youtube.com/embed/25vQwH1b0NI'},
-      {title:'Crazy, Stupid, Love',genre:'Komedi',thumb:'https://via.placeholder.com/400x600?text=Crazy+Stupid+Love',url:'https://www.youtube.com/embed/4P2buz93fHU'},
-      {title:'Superbad',genre:'Komedi',thumb:'https://via.placeholder.com/400x600?text=Superbad',url:'https://www.youtube.com/embed/4eaZ_48ZYog'},
-      {title:'Get Out',genre:'Korku',thumb:'https://via.placeholder.com/400x600?text=Get+Out',url:'https://www.youtube.com/embed/DzfpyUB60YY'},
-      {title:'La La Land',genre:'Romantik',thumb:'https://via.placeholder.com/400x600?text=La+La+Land',url:'https://www.youtube.com/embed/0pdqf4P9MB8'},
-      {title:'Silver Linings Playbook',genre:'Romantik',thumb:'https://via.placeholder.com/400x600?text=Silver+Linings',url:'https://www.youtube.com/embed/L5h4OCl7y7Q'},
-      {title:'The Big Lebowski',genre:'Komedi',thumb:'https://via.placeholder.com/400x600?text=Big+Lebowski',url:'https://www.youtube.com/embed/2kDqk2hO6p8'},
-      {title:'It',genre:'Korku',thumb:'https://via.placeholder.com/400x600?text=It',url:'https://www.youtube.com/embed/xhJkR56-dJQ'},
-      {title:'American Psycho',genre:'Suç',thumb:'https://via.placeholder.com/400x600?text=American+Psycho',url:'https://www.youtube.com/embed/Lf1O4F2Z8VY'}
-    ];
+            let movies = [];
 
-    const genres = [...new Set(MOVIES.map(f=>f.genre))];
-    const genresDiv = document.getElementById('genres');
-    const grid = document.getElementById('grid');
+            // Filmleri JSON dosyasından yükle
+            fetch('data/movies.json')
+                .then(response => response.json())
+                .then(data => {
+                    movies = data;
+                    displayMovies(movies);
+                });
 
-    // Kategori butonlarını oluştur
-    genres.forEach(g=>{
-      const btn = document.createElement('div');
-      btn.className='genre';
-      btn.innerText=g;
-      btn.onclick=()=>{
-        document.querySelectorAll('.genre').forEach(x=>x.classList.remove('active'));
-        btn.classList.add('active');
-        displayMovies(MOVIES.filter(m=>m.genre===g));
-      };
-      genresDiv.appendChild(btn);
-    });
+            // Filmleri görüntüle
+            function displayMovies(movies) {
+                movieGrid.innerHTML = '';
+                movies.forEach(movie => {
+                    const movieCard = document.createElement('div');
+                    movieCard.classList.add('movie-card');
+                    movieCard.innerHTML = `
+                        <img src="${movie.image}" alt="${movie.title}">
+                        <h3>${movie.title}</h3>
+                    `;
+                    movieCard.addEventListener('click', () => {
+                        playerIframe.src = movie.url;
+                        playerModal.style.display = 'block';
+                    });
+                    movieGrid.appendChild(movieCard);
+                });
+            }
 
-    function displayMovies(list){
-      grid.innerHTML='';
-      list.forEach(m=>{
-        const card = document.createElement('div');
-        card.className='card';
-        card.innerHTML=`<div class='thumb' style='background-image:url(${m.thumb})'></div><div class='title'>${m.title}</div>`;
-        card.onclick=()=>{
-          document.getElementById('player').src = m.url;
-          document.getElementById('modal').classList.add('open');
-        };
-        grid.appendChild(card);
-      });
-    }
+            // Arama fonksiyonu
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(query));
+                displayMovies(filteredMovies);
+            });
 
-    displayMovies(MOVIES);
+            // Modalı kapatma
+            closeBtn.addEventListener('click', () => {
+                playerModal.style.display = 'none';
+                playerIframe.src = '';
+            });
 
-    // Arama fonksiyonu
-    document.getElementById('search').addEventListener('input',e=>{
-      const val = e.target.value.toLowerCase();
-      displayMovies(MOVIES.filter(f=>f.title.toLowerCase().includes(val)));
-    });
-
-    // Modal kapatma
-    document.getElementById('closeModal').onclick=()=>{
-      document.getElementById('modal').classList.remove('open');
-      document.getElementById('player').src='';
-    };
-  </script>
+            window.addEventListener('click', (event) => {
+                if (event.target === playerModal) {
+                    playerModal.style.display = 'none';
+                    playerIframe.src = '';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
